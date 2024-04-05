@@ -16,3 +16,5 @@ try {
 
 
 var_dump($retorno);
+
+//var_dump(phpinfo());

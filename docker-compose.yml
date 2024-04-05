@@ -13,6 +13,7 @@ services:
       - "8080:80"
     volumes:
       - ./app:/var/www/project
+      - ./php/phpIni/php:/usr/local/etc/php
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php8.2-service
@@ -30,6 +31,7 @@ services:
       - "9000:9000"
     volumes:
       - ./app:/var/www/project
+      - ./php/phpIni/php:/usr/local/etc/php
     networks:
       - nginx-php8.2-postgres-node
     depends_on:
