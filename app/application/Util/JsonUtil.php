@@ -19,4 +19,26 @@ class JsonUtil
             return $postJson;
         }
     }
+
+    public function processaArrayRetorno($retorno)
+    {
+        $dados = [];
+        $dados[ConstantesGenericasUtil::TIPO] = ConstantesGenericasUtil::TIPO_ERRO;
+
+        if(is_array($retorno) && count($retorno) > 0 || mb_strlen($retorno) > 10) {
+            $dados[ConstantesGenericasUtil::TIPO] = ConstantesGenericasUtil::TIPO_SUCESSO;
+            $dados[ConstantesGenericasUtil::RESPOSTA] = $retorno;
+        }
+
+        $this->retornaJson($dados);
+    }
+
+    private function retornaJson($dados)
+    {
+        header('Content-Type: application/json');
+        header('Cache-Control: no-cache, no-store, must-revalidate');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+        echo json_encode($dados);
+        exit;
+    }
 }

@@ -3,6 +3,7 @@
 namespace Repository;
 
 use DB\PostgreSQL;
+use InvalidArgumentException;
 use Util\ConstantesGenericasUtil;
 
 class TokensAutorizadosRepository
@@ -16,6 +17,11 @@ class TokensAutorizadosRepository
         $this->db = new PostgreSQL();
     }
 
+    /**
+     * Método responsável por validar token na tabela de tokens
+     *
+     * @param $token
+     */
     public function validaToken($token)
     {
         $token = str_replace([' ', 'Bearer'], '', $token);
@@ -32,13 +38,11 @@ class TokensAutorizadosRepository
 
             if($stmt->rowCount() !== 1) {
                 header('HTTP/1.1. 401 Unauthorized');
-                throw new \InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_NAO_AUTORIZADO);
+                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_NAO_AUTORIZADO);
             }
 
-            echo 'tokenAutorizado';
-
         } else {
-            throw new \InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_VAZIO);
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_VAZIO);
         }
     }
 
