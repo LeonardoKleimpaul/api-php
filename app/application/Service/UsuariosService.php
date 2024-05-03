@@ -41,9 +41,7 @@ class UsuariosService
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
 
-        if($retorno == null) {
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-        }
+        $this->validaRetornoNull($retorno);
 
         return $retorno;
     }
@@ -54,18 +52,12 @@ class UsuariosService
         $recurso = $this->dados['recurso'];
 
         if (in_array($recurso, self::RECURSOS_DELETE)) {
-            if($this->dados['id'] > 0) {
-                $retorno = $this->$recurso();
-            } else {
-                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
-            }
+            $retorno = $this->validaIdObrigatorio($recurso);
         } else {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
 
-        if($retorno == null) {
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-        }
+        $this->validaRetornoNull($retorno);
 
         return $retorno;
     }
@@ -81,9 +73,7 @@ class UsuariosService
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
 
-        if($retorno == null) {
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-        }
+        $this->validaRetornoNull($retorno);
 
         return $retorno;
     }
@@ -94,18 +84,12 @@ class UsuariosService
         $recurso = $this->dados['recurso'];
 
         if (in_array($recurso, self::RECURSOS_PUT)) {
-            if($this->dados['id'] > 0) {
-                $retorno = $this->$recurso();
-            } else {
-                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
-            }
+            $retorno = $this->validaIdObrigatorio($recurso);
         } else {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
 
-        if($retorno == null) {
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-        }
+        $this->validaRetornoNull($retorno);
 
         return $retorno;
     }
@@ -159,5 +143,23 @@ class UsuariosService
 
         $this->usuariosRepository->getDataBase()->getDb()->rollback();
         throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_NAO_AFETADO);
+    }
+
+    private function validaRetornoNull($retorno)
+    {
+        if($retorno == null) {
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
+        }
+    }
+
+    private function validaIdObrigatorio($recurso)
+    {
+        if($this->dados['id'] > 0) {
+            $retorno = $this->$recurso();
+        } else {
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
+        }
+
+        return $retorno;
     }
 }

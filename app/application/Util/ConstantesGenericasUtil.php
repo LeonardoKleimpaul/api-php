@@ -27,7 +27,6 @@ abstract class ConstantesGenericasUtil
 
     /* RECURSO USUARIOS */
     public const MSG_ERRO_ID_OBRIGATORIO = 'ID é obrigatório!';
-    public const MSG_ERRO_LOGIN_EXISTENTE = 'Login já existente!';
     public const MSG_ERRO_LOGIN_SENHA_OBRIGATORIO = 'Login e Senha são obrigatórios!';
 
     /* RETORNO JSON */
@@ -35,7 +34,6 @@ abstract class ConstantesGenericasUtil
     const TIPO_ERRO = 'erro';
 
     /* OUTRAS */
-    public const SIM = 'S';
     public const TIPO = 'tipo';
     public const RESPOSTA = 'resposta';
 }
