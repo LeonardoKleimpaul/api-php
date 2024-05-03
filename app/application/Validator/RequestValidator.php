@@ -68,4 +68,60 @@ class RequestValidator
 
         return $retorno;
     }
+
+    private function delete()
+    {
+        $retorno = ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA;
+
+        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_DELETE)) {
+            switch ($this->request['rota']) {
+                case self::USUARIOS:
+                    $usuarioService = new  UsuariosService($this->request);
+                    $retorno = $usuarioService->validarDelete();
+                    break;
+                default:
+                    throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+            }
+        }
+
+        return $retorno;
+    }
+
+    private function post()
+    {
+        $retorno = ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA;
+
+        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_POST)) {
+            switch ($this->request['rota']) {
+                case self::USUARIOS:
+                    $usuarioService = new  UsuariosService($this->request);
+                    $usuarioService->setDadosCorpoRequest($this->dadosRequest);
+                    $retorno = $usuarioService->validarPost();
+                    break;
+                default:
+                    throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+            }
+        }
+
+        return $retorno;
+    }
+
+    private function put()
+    {
+        $retorno = ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA;
+
+        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_PUT)) {
+            switch ($this->request['rota']) {
+                case self::USUARIOS:
+                    $usuarioService = new  UsuariosService($this->request);
+                    $usuarioService->setDadosCorpoRequest($this->dadosRequest);
+                    $retorno = $usuarioService->validarPut();
+                    break;
+                default:
+                    throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+            }
+        }
+
+        return $retorno;
+    }
 }
