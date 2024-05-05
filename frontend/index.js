@@ -112,6 +112,10 @@ async function listarUsuarios() {
 }
 
 async function removerUsuario(id) {
+  if(!confirm( 'Deseja realmente excluir este usuário?')) {
+    return false;
+  }
+
   let data = await fetchData('usuarios/deletar/' + id, 'DELETE');
 
   if (data.tipo == 'sucesso') {
