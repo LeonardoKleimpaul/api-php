@@ -31,7 +31,7 @@ async function enviarDados(form, rota, method) {
 
   if(method == 'POST') {
     nome = form.target.name.value;
-    email = form.target.email;
+    email = form.target.email.value;
   } else if (method == 'PUT') {
     nome = form.target.editName.value;
     email = form.target.editEmail;
