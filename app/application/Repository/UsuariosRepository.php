@@ -22,15 +22,15 @@ class UsuariosRepository
         return $this->db;
     }
 
-    public function insertUser($login, $senha)
+    public function insertUser($nome, $email)
     {
-        $insert = 'INSERT INTO ' . self::TABELA . ' (login, senha) VALUES (:login, :senha)';
+        $insert = 'INSERT INTO ' . self::TABELA . ' (nome, email) VALUES (:nome, :email)';
 
         $this->db->getDb()->beginTransaction();
         $stmt = $this->db->getDb()->prepare($insert);
 
-        $stmt->bindParam(':login', $login);
-        $stmt->bindParam(':senha', $senha);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
 
         return $stmt->rowCount();
@@ -38,14 +38,14 @@ class UsuariosRepository
 
     public function updateUser($id, $dados)
     {
-        $update = 'UPDATE ' . self::TABELA . ' SET login = :login, senha = :senha WHERE id = :id';
+        $update = 'UPDATE ' . self::TABELA . ' SET nome = :nome, email = :email WHERE id = :id';
 
         $this->db->getDb()->beginTransaction();
         $stmt = $this->db->getDb()->prepare($update);
 
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':login', $dados['login']);
-        $stmt->bindParam(':senha', $dados['senha']);
+        $stmt->bindParam(':nome', $dados['nome']);
+        $stmt->bindParam(':email', $dados['email']);
         $stmt->execute();
 
         return $stmt->rowCount();
