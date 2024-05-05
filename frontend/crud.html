@@ -114,14 +114,15 @@
           </div>
           <div class="modal-body gap-5">
             <form id="edit-form" action="PUT">
+              <input id="editId" type="hidden">
               <div class="my-3">
-                <label for="edit-name" class="fomr-label">Nome</label>
-                <input id="edit-name" class="form-control" type="text">
+                <label for="editName" class="fomr-label">Nome</label>
+                <input id="editName" class="form-control" type="text">
               </div>
 
               <div class="my-3">
-                <label for="edit-email" class="fomr-label">Email</label>
-                <input id="edit-email" class="form-control" type="text">
+                <label for="editEmail" class="fomr-label">Email</label>
+                <input id="editEmail" class="form-control" type="text">
               </div>
 
               <div class="form-check">
@@ -134,7 +135,7 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary">Atualizar</button>
+            <button type="submit" class="btn btn-primary" form="edit-form">Atualizar</button>
           </div>
         </div>
       </div>

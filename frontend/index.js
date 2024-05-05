@@ -8,26 +8,47 @@ const headers = {
 document.addEventListener('DOMContentLoaded', () => {
   listarUsuarios();
   const createForm = document.getElementById('create-form');
+  const editForm = document.getElementById('edit-form');
 
   if(createForm) {
     createForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      enviarDados(e);
+      enviarDados(e, 'usuarios/cadastrar', 'POST');
+    });
+  }
+
+  if(editForm) {
+    editForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      enviarDados(e, 'usuarios/atualizar/', 'PUT');
     });
   }
 });
 
-async function enviarDados(form) {
-  if (form.target.name && form.target.email) {
+async function enviarDados(form, rota, method) {
+
+  let nome, email = null;
+
+  if(method == 'POST') {
+    nome = form.target.name.value;
+    email = form.target.email;
+  } else if (method == 'PUT') {
+    nome = form.target.editName.value;
+    email = form.target.editEmail;
+  }
+
+  if ((nome && email)) {
     try {
 
       const dados = {
-        nome: form.target.name.value,
-        email: form.target.email.value,
+        nome: nome,
+        email: email,
       };
 
-      const response = await fetch(url + 'usuarios/cadastrar', {
-        method: 'POST',
+      method == 'PUT' ? rota += form.target.editId.value : method;
+
+      const response = await fetch(url + rota, {
+        method: method,
         headers: headers,
         body: JSON.stringify(dados),
       });
@@ -74,27 +95,41 @@ async function listarUsuarios() {
         cell3.innerHTML = e.email;
         cell4.innerHTML = e.status == true ? 'Ativo' : 'Inativo';
         cell5.innerHTML = `<button data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-sm btn-primary" onclick="editarUsuario(${e.id})">Editar</button>
-                <button class="btn btn-sm btn-danger" onclick="excluirUsuario(${e.id})">Excluir</button>`;
+                <button class="btn btn-sm btn-danger" onclick="removerUsuario(${e.id})">Excluir</button>`;
       }
     });
   }
 }
 
-async function editarUsuario($id) {
-  let data = await fetchData('usuarios/listar/' + $id);
+async function removerUsuario(id) {
+  let data = await fetchData('usuarios/deletar/' + id, 'DELETE');
+
+  if (data.tipo == 'sucesso') {
+    let table = document.getElementById('usuariosTable');
+    let rowToRemove = table ? table.querySelector(`tr[data-id="${id}"]`) : null;
+
+    if (rowToRemove) {
+      rowToRemove.remove();
+    }
+  }
+}
+
+async function editarUsuario(id) {
+  let data = await fetchData('usuarios/listar/' + id);
 
   if (data.tipo == 'sucesso') {
     let usuario = data.resposta;
 
-    document.getElementById('edit-name').value = usuario.nome;
-    document.getElementById('edit-email').value = usuario.email;
+    document.getElementById('editName').value = usuario.nome;
+    document.getElementById('editEmail').value = usuario.email;
+    document.getElementById('editId').value = id;
   }
 }
 
-async function fetchData(rota) {
+async function fetchData(rota, method = 'GET') {
   try {
     const response = await fetch(url + rota, {
-      method: 'GET',
+      method: method,
       headers: headers,
     });
 
