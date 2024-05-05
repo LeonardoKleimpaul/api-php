@@ -28,13 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
 async function enviarDados(form, rota, method) {
 
   let nome, email = null;
+  let status = true;
 
   if(method == 'POST') {
     nome = form.target.name.value;
     email = form.target.email.value;
+    status = form.target.status.checked ? 'true' : 'false';
   } else if (method == 'PUT') {
     nome = form.target.editName.value;
     email = form.target.editEmail.value;
+    status = form.target.editStatus.checked ? 'true' : 'false';
   }
 
   if ((nome && email)) {
@@ -43,6 +46,7 @@ async function enviarDados(form, rota, method) {
       const dados = {
         nome: nome,
         email: email,
+        status: status,
       };
 
       method == 'PUT' ? rota += form.target.editId.value : method;
@@ -128,6 +132,7 @@ async function editarUsuario(id) {
 
     document.getElementById('editName').value = usuario.nome;
     document.getElementById('editEmail').value = usuario.email;
+    document.getElementById('editStatus').checked = usuario.status;
     document.getElementById('editId').value = id;
   }
 }

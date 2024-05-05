@@ -117,10 +117,10 @@ class UsuariosService
 
     private function cadastrar()
     {
-        [$nome, $email] = [$this->dadosCorpoRequest['nome'], $this->dadosCorpoRequest['email']];
+        [$nome, $email, $status] = [$this->dadosCorpoRequest['nome'], $this->dadosCorpoRequest['email'], $this->dadosCorpoRequest['status']];
 
         if ($nome && $email) {
-            if($this->usuariosRepository->insertUser($nome, $email) > 0) {
+            if($this->usuariosRepository->insertUser($nome, $email, $status) > 0) {
                 $idInserido = $this->usuariosRepository->getDataBase()->getDb()->lastInsertId();
                 $this->usuariosRepository->getDataBase()->getDb()->commit();
                 return ['id_inserido' => $idInserido];
