@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     enviarDados(e);
     e.preventDefault();
     alert(url + 'cadastrar');
-    // Add your code here to handle the form submission
   });
 });
 
