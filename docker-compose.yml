@@ -47,13 +47,3 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-
-  #node
-  # node-service:
-  #     image: node:latest
-  #     container_name: node-container
-  #     volumes:
-  #         - ./app:/var/www/project
-  #     working_dir: /var/www/project
-  #     networks:
-  #         - nginx-php8.2-postgres-node
