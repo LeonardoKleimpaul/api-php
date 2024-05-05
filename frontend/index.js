@@ -34,7 +34,7 @@ async function enviarDados(form, rota, method) {
     email = form.target.email.value;
   } else if (method == 'PUT') {
     nome = form.target.editName.value;
-    email = form.target.editEmail;
+    email = form.target.editEmail.value;
   }
 
   if ((nome && email)) {
@@ -56,9 +56,15 @@ async function enviarDados(form, rota, method) {
       const data = await response.json();
 
       if(data.resposta.id_inserido){
+        document.getElementById('create-form').reset();
         document.getElementById('create-btn-close').click();
-        listarUsuarios();
       }
+
+      if(method = 'PUT' && data.tipo == 'sucesso') {
+        document.getElementById('edit-btn-close').click();
+      }
+
+      listarUsuarios();
 
     } catch (error) {
       console.error(error);
@@ -71,9 +77,9 @@ async function listarUsuarios() {
 
   if (data.tipo == 'sucesso') {
     let usuarios = data.resposta;
+    let table = document.getElementById('usuariosTable');
 
     usuarios.forEach((e) => {
-      let table = document.getElementById('usuariosTable');
       let existingRow = table ? table.querySelector(`tr[data-id="${e.id}"]`) : null;
 
       if (existingRow) {
